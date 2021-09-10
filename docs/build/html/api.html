@@ -6,17 +6,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Python API &#8212; Satyrus 3.0.0 documentation</title>
+    <title>Python API &#8212; Satyrus 3.0.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="SATish Language" href="satish.html" />
+    <link rel="prev" title="Examples" href="examples.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,7 +37,53 @@
 <h1>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h1>
 <section id="how-to">
 <h2>How to<a class="headerlink" href="#how-to" title="Permalink to this headline">¶</a></h2>
-<p>In order to define new solver interfaces, one may write a Python file (<em>.py</em>, <em>.pyw</em>) with <code class="docutils literal notranslate"><span class="pre">SatAPI</span></code> subclasses who implement the <code class="docutils literal notranslate"><span class="pre">solve</span></code> method.</p>
+<p>In order to define new solver interfaces, one may write a Python file (<code class="docutils literal notranslate"><span class="pre">.py</span></code>) with <code class="docutils literal notranslate"><span class="pre">SatAPI</span></code> subclasses who implement the <code class="docutils literal notranslate"><span class="pre">solve(posiform,</span> <span class="pre">**params)</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Future Imports (Python &lt; 3.10)</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">satyrus</span> <span class="kn">import</span> <span class="n">SatAPI</span><span class="p">,</span> <span class="n">Posiform</span>
+
+<span class="c1"># Your Favourite Solver</span>
+<span class="kn">from</span> <span class="nn">solvers</span> <span class="kn">import</span> <span class="n">BestSolver</span>
+
+<span class="k">class</span> <span class="nc">custom</span><span class="p">(</span><span class="n">SatAPI</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">posiform</span><span class="p">:</span> <span class="n">Posiform</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">BestSolver</span><span class="o">.</span><span class="n">model</span><span class="p">(</span>
+            <span class="n">expression</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">posiform</span><span class="p">),</span>
+            <span class="n">variables</span><span class="o">=</span><span class="n">posiform</span><span class="o">.</span><span class="n">variables</span><span class="p">()</span>
+            <span class="n">objective</span><span class="o">=</span><span class="n">BestSolver</span><span class="o">.</span><span class="n">MINIMIZE</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">params</span></code> keyword argumentss are provided by the command-line <code class="docutils literal notranslate"><span class="pre">-p,</span> <span class="pre">--params</span></code> option and read from the corresponding JSON file. In the example above, suppose we have some solver interface <code class="docutils literal notranslate"><span class="pre">BestSolver</span></code> that takes as input some expression to be optimized, the problem variables list and an objective option either to minimize or maximize the expression’s value. Let’s say that this code was written to a file called <code class="docutils literal notranslate"><span class="pre">customapi.py</span></code>.</p>
+</section>
+<section id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<p>In order to launch a custom interface, one must provide the subclass definition file as argument for the <code class="docutils literal notranslate"><span class="pre">-a,</span> <span class="pre">--api</span></code> command-line option, as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ satyrus source.sat --api customapi.py -s custom
+</pre></div>
+</div>
+<p>This will enable the <code class="docutils literal notranslate"><span class="pre">custom</span></code> solver interface to be recognized and used during the solving proccess.</p>
+</section>
+<section id="appendix-posiform">
+<h2>Appendix - Posiform<a class="headerlink" href="#appendix-posiform" title="Permalink to this headline">¶</a></h2>
+<p>A <em>Posiform</em> is a specific mathematical form given by a polynomial on boolean variables, i.e.</p>
+<div class="math notranslate nohighlight">
+\[P(x_1, \dots, x_k) = \sum_{i = 1}^{n} c_{i} \prod_{j} x_{j}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_j \in \{0, 1\}\)</span> and <span class="math notranslate nohighlight">\(c_i \in \mathbb{R}\)</span>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">satyrus</span></code> Python module implements the <code class="docutils literal notranslate"><span class="pre">Posiform</span></code> type. It does support common arithmetic operations between posiforms and scalars, which is done by regular operator overloading. This type subclasses the built-in <code class="docutils literal notranslate"><span class="pre">dict</span></code> type and its keys are hashable sets of strings (built with the built-in <code class="docutils literal notranslate"><span class="pre">frozenset</span></code> and <code class="docutils literal notranslate"><span class="pre">str</span></code> types).</p>
+<p>Its values are given by floating-point (<code class="docutils literal notranslate"><span class="pre">float</span></code>) numbers. It also happens for the key to be <code class="docutils literal notranslate"><span class="pre">None</span></code> in order to represent an eventual constant term.</p>
+<p>Calling the <code class="docutils literal notranslate"><span class="pre">str(...)</span></code> built-in function on a <code class="docutils literal notranslate"><span class="pre">Posiform</span></code> instance yields the corresponding energy equation as an arithmetic expression string. Another feature, the <code class="docutils literal notranslate"><span class="pre">.variables()</span></code> method call, enables the retriaval of the set of variables. Also, there is the bound method <code class="docutils literal notranslate"><span class="pre">.qubo()</span></code> that translates the posiform’s contents into a <a class="reference external" href="https://en.wikipedia.org/wiki/Quadratic_unconstrained_binary_optimization">QUBO</a> formulation, applying degree reduction as needed <a class="footnote-reference brackets" href="#id2" id="id1">1</a>.</p>
+<p>These are the main ways to provide information to your favourite solver.</p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>This is, in fact, in need for further study.</p>
+</dd>
+</dl>
 </section>
 </section>
 
@@ -61,19 +107,20 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="start.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="satish.html">SATish Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Python API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to">How to</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running">Running</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#appendix-posiform">Appendix - Posiform</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="satish.html" title="previous chapter">SATish Language</a></li>
-      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
+      <li>Previous: <a href="examples.html" title="previous chapter">Examples</a></li>
   </ul></li>
 </ul>
 </div>

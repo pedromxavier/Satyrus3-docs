@@ -25,29 +25,14 @@ To represent this graph in SATish we write an array declaration foolowed by its 
       (1,4) : 1,
       (1,5) : 1,
 
-      (2,1) : 0,
-      (2,2) : 0,
       (2,3) : 1,
       (2,4) : 1,
       (2,5) : 1,
 
-      (3,1) : 1,
-      (3,2) : 1,
-      (3,3) : 0,
       (3,4) : 1,
       (3,5) : 1,
 
-      (4,1) : 1,
-      (4,2) : 1,
-      (4,3) : 1,
-      (4,4) : 0,
-      (4,5) : 0,
-
-      (5,1) : 1,
-      (5,2) : 1,
-      (5,3) : 1,
-      (5,4) : 0,
-      (5,5) : 0
+      (4,5) : 0
    };
 
 In this case, all array entries are constants. Next, we declare our problem unknowns, the color assignment for each vertex and also the list of used colors.
@@ -153,6 +138,7 @@ Defining custom solver interfaces is pretty straightforward. In a separate Pytho
    # Future Imports
    from __future__ import annotations
 
+   # Satyrus Imports
    from satyrus import SatAPI, Posiform
 
    class MyPartialAPI(SatAPI):
@@ -163,6 +149,8 @@ Defining custom solver interfaces is pretty straightforward. In a separate Pytho
    class MyCompleteAPI(SatAPI):
       
        def solve(self, posiform: Posiform, **params: dict) -> tuple[dict, float]:
+           # Completely ignores problem defined by 'posiform'
+           # giving always the same solution:
            x = {'x': 0, 'y': 1, 'z': 0}
            e = 2.0
            return (x, e)
@@ -177,6 +165,7 @@ After writing the contents above to the ``myapi.py`` file, it becomes possible t
 
 **Note:** As you might be thinking, it is important to chose the class name wisely!
 
+More about the Python API is found on this `page <./api.html>`_.
+
 ..  * :ref:`genindex`
-    * :ref:`modindex`
     * :ref:`search`

@@ -40,4 +40,6 @@ c[n];
     unique{k = [1:n]}
     vc[i][k];
 
-(opt) cost: exists{k = [1:n]} c[k];
+(opt) cost:
+    exists{k = [1:n]}
+    c[k];

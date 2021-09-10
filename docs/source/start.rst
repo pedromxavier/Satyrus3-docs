@@ -44,5 +44,4 @@ After installation, the ``satyrus`` executable should be available in the comman
     $ satyrus source.sat
 
 ..  * :ref:`genindex`
-    * :ref:`modindex`
     * :ref:`search`

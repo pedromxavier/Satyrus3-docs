@@ -81,5 +81,4 @@ One might want to use the older SATish syntax, present in the previous versions 
    $ satyrus oldsource.sat --legacy
 	
 ..  * :ref:`genindex`
-    * :ref:`modindex`
     * :ref:`search`
