@@ -15,7 +15,7 @@ neigh[n][n] = {
   (3,4) : 1,
   (3,5) : 1,
 
-  (4,5) : 0,
+  (4,5) : 0
 };
 
 # Correspondence between each vertex and its color
