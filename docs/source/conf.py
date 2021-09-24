@@ -29,7 +29,7 @@ class SATishLexer(RegexLexer):
         'root': [
             (r'\#\{[\S\s]*?\}\#', token.Comment.Multiline),
             (r'\#.*?$', token.Comment.Singleline),
-            (r'[-+]?[0-9]*\.?[0-9]+([Ee][-+]?[0-9]+)?', token.Number),
+            (r'[0-9]*\.?[0-9]+([Ee][-+]?[0-9]+)?', token.Number),
             (r'\(int\)', token.Keyword),
             (r'\(opt\)', token.Keyword),
             (r'forall', token.Keyword),
@@ -80,7 +80,7 @@ copyright = f'2021, {author}'
 
 
 # The full version, including alpha/beta/rc tags
-release = '3.0.3'
+release = '3.0.4'
 
 
 # -- General configuration ---------------------------------------------------

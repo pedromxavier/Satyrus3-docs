@@ -1,0 +1,59 @@
+n=5;
+
+tour[n][n];
+
+dist[n][n] = {
+  (1,1): 0,
+  (1,2): 4,
+  (1,3): 4,
+  (1,4): 9,
+  (1,5): 0,
+
+  (2,1): 4,
+  (2,2): 0,
+  (2,3): 9,
+  (2,4): 4,
+  (2,5): 4,
+
+  (3,1): 4,
+  (3,2): 9,
+  (3,3): 0,
+  (3,4): 4,
+  (3,5): 4,
+
+  (4,1): 9,
+  (4,2): 4,
+  (4,3): 4,
+  (4,4): 0,
+  (4,5): 9,
+
+  (5,1): 0,
+  (5,2): 4,
+  (5,3): 4,
+  (5,4): 9,
+  (5,5): 0
+};
+
+(int) twins[1]: tour[1][1] and tour[n][n];
+
+(int) visit_all_once[1]: 
+  forall{i = [1:n]} # Cada cidade 'i' possui uma
+  unique{j = [1:n]} # única posição 'j' no tour
+  tour[i][j];
+
+(int) place_all_once[1]: 
+  unique{i = [1:n]} # Cada posição 'j' no tour
+  forall{j = [1:n]} # possui uma única cidade 'i'
+  tour[i][j];
+
+(opt) backwards_cost:
+    exists{i = [1:n]}
+    exists{j = [1:n], i != j}
+    exists{k = [2:n]}
+    (tour[i][k] and tour[j][k-1]) -> dist[i][k];
+
+(opt) forwards_cost:
+    exists{i = [1:n]}
+    exists{j = [1:n], i != j}
+    exists{k = [1:n-1]}
+    (tour[i][k] and tour[j][k+1]) -> dist[i][k];
