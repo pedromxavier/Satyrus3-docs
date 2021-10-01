@@ -33,6 +33,12 @@ Building from source
 
 The ``[all]`` suffix is optional but recommended since it automatically installs the dependencies required for running the available solver interfaces (DWave & Gurobi).
 
+**Note:** Satyrus is still under constant development. If you have already installed, please install using the ``--upgrade`` option.
+
+.. code-block:: bash
+
+   $ pip install .[all] --upgrade
+
 Command line interface
 ======================
 

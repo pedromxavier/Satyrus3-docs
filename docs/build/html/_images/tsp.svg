@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300.0" height="100.0" viewBox="0 0 300.0 100.0">
+    <style>
+        circle {
+            stroke: #3E4349;
+            fill: rgb(239, 239, 239);
+        }
+
+        text {
+            font-size: 5px;
+            stroke: #3E4349;
+            stroke-width: 0.5px;
+            text-anchor: middle;
+            alignment-baseline: middle;
+        }
+
+        text.value {
+            font-size: 8px;
+        }
+
+        line {
+            stroke:  #3E4349;
+        }
+    </style>
+
+    <!-- I - II : 4 -->
+    <line x1="90px" y1="30px" x2="120px" y2="60px" />
+    <text class="value" x="105px" y="45px" dy="-3px" dx="3px">4</text>
+
+    <!-- I - III : 4 -->
+    <line x1="90px" y1="30px" x2="170px" y2="50px" />
+    <text class="value" x="130px" y="40px" dy="-6px">4</text>
+
+    <!-- I - IV : 9 -->
+    <line x1="90px" y1="30px" x2="100px" y2="90px" />
+    <text class="value" x="95px" y="60px" dy="3px" dx="-6px">9</text>
+
+    <!-- II - III : 9-->
+    <line x1="120px" y1="60px" x2="170px" y2="50px" />
+    <text class="value" x="145px" y="55px" dy="-4px">9</text>
+
+    <!-- II - IV : 4 -->
+    <line x1="120px" y1="60px" x2="100px" y2="90px" />
+    <text class="value" x="110px" y="75px" dy="-6px" dx="-4px">4</text>
+
+    <!-- III - IV : 4 -->
+    <line x1="170px" y1="50px" x2="100px" y2="90px" />
+    <text class="value" x="135px" y="70px" dy="6px" dx="2px">4</text>
+
+    <circle cx="90px" cy="30px" r="5px" />
+    <text x="90px" y="30px" dy="0.5px">I</text>
+
+    <circle cx="120px" cy="60px" r="5px" />
+    <text x="120px" y="60px" dy="0.5px">II</text>
+
+    <circle cx="170px" cy="50px" r="5px" />
+    <text x="170px" y="50px" dy="0.5px">III</text>
+
+    <circle cx="100px" cy="90px" r="5px" />
+    <text x="100px" y="90px" dy="0.5px">IV</text>
+</svg>

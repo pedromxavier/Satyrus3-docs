@@ -1,0 +1,102 @@
+#?prec: 16; # Precision
+#?epsilon: 1E-03;
+#?alpha: 30;
+
+
+################################
+###### Dados da Instância ######
+################################
+
+# ###### Descrição da Instância ######
+# Capacidade da Mochila: 4
+# Itens: 3
+# Peso dos Itens:  [2, 3, 1]
+# Valor dos Itens: [4, 6, 3]
+
+# ###### Resposta Correta ######
+# Itens selecionados:   Item 2 e Item 3
+# Vetor item[n]:        [0, 1, 1]
+# Blocos selecionados:  Blocos (3, 4, 5) -> Item 2 e (6) -> Item 3
+
+
+################################
+###### Estrutura de Dados ######
+################################
+
+# Capacidade da mochila (cada slot tem peso 1)
+s = 4;
+
+# Quantidade de itens
+n = 3;
+
+# Quantidade de blocos no conjunto de itens (peso total).
+b = 6;
+
+# Vetor de itens 'n'
+item[n];
+
+# Correspondência: se o slot 's' da mochila é ocupado pelo bloco 'b'
+x[s][b];
+
+# Matriz item-bloco (Itens 'n' são compostos pelos blocos 'b')
+item_block[n][b] = {
+  (1,1) : 1,
+  (1,2) : 1,
+  (1,3) : 0,
+  (1,4) : 0,
+  (1,5) : 0,
+  (1,6) : 0,
+
+  (2,1) : 0,
+  (2,2) : 0,
+  (2,3) : 1,
+  (2,4) : 1,
+  (2,5) : 1,
+  (2,6) : 0,
+
+  (3,1) : 0,
+  (3,2) : 0,
+  (3,3) : 0,
+  (3,4) : 0,
+  (3,5) : 0,
+  (3,6) : 1
+};
+
+# Vetor de valor dos itens (NOTA: Soma dos valores precisa ser igual a -1)
+value[n] = {
+  (1) : 4,
+  (2) : 6,
+  (3) : 3
+};
+
+
+########################
+###### Restrições ######
+########################
+
+# Níveis de Penalidade
+LOW = 1;
+
+# Bias: Selecionar todos os blocos
+(int) one_block_per_slot[LOW]:
+    forall{i = [1:s]}
+    unique{k = [1:b]}
+    x[i][k];
+
+# WTA: Se um bloco 'k' ocupa o slot 'i' então o mesmo bloco 'k' não pode ocupar outro slot 'j'
+(int) one_slot_per_block[LOW]: # WTA
+    unique{i = [1:s]}
+    forall{k = [1:b]}
+    x[i][k];
+
+# Acoplamento
+(int) coupling[LOW]:
+    forall{m = [1:n]}
+    forall{i = [1:s]}
+    forall{k = [1:b]}
+    item_block[m][k] -> (x[i][k] <-> item[m]);
+
+# Otimalidade (Maximizar soma do valor dos itens escolhidos)
+(opt) cost:
+    exists{i = [1:n]}
+    -item[i] * value[i];

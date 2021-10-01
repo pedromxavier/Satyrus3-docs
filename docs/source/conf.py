@@ -80,7 +80,7 @@ copyright = f'2021, {author}'
 
 
 # The full version, including alpha/beta/rc tags
-release = '3.0.4'
+release = '3.0.5'
 
 
 # -- General configuration ---------------------------------------------------
