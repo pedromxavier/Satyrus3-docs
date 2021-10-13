@@ -6,7 +6,7 @@
 \usepackage{hyperref}
 
 \title{Satyrus 3 - A Compiler}
-\author{Pedro Maciel Xavier$^1$, Felipe M. G. Fran\c{c}a$^2$, Priscila M. V. Lima$^2$ $^3$\\
+\author{Pedro Maciel Xavier$^1$, Felipe M. G. Fran\c{c}a$^2$, Priscila M. V. Lima$^2$ $^3$\\z
 $^1$ POLI/UFRJ, $^2$ PESC/COPPE/UFRJ, $^3$ NCE/UFRJ}
 
 \begin{document}
@@ -15,7 +15,7 @@ $^1$ POLI/UFRJ, $^2$ PESC/COPPE/UFRJ, $^3$ NCE/UFRJ}
 \maketitle
 
 \begin{abstract}
-    In order to facilitate the production of codes using WiSARD-based models, LabZero developed an ML library C++/Python called wisardpkg. This library is an MIT-licensed open-source package hosted on GitHub under the license.
+    In order to facilitate the production of codes using WiSARD-based models, LabZero developed an ML library C++/Python called wisardpkg. This compiler is a MIT-licensed open-source package hosted on GitHub under the license.
 \end{abstract}
 
 \section{Introduction}
@@ -25,7 +25,7 @@ that  do  not  use weighted synapses to store the information it learns from pre
 
 The WiSARD (Wilkes, Stonham and Aleksander Recognition Device) \cite{aleksander} is a pioneering WANN model that was originally designed to solve simple classification tasks. WiSARD has received extensions to perform semi-supervised and unsupervised learning, regression tasks, and improvements in training and classification policies.
 
-Recent applications of WiSARD with remarkable results corroborating the choice of this model: data stream clustering \cite{douglas, douglas2, douglas3}; time-series classification \cite{souza2014}; audio processing \cite{souza2015}; online tracking of objects \cite{nascimento2015}; GPS trajectory classification \cite{barbosa2018}; part-of-speech tagging \cite{carneiro2015, carneiro2017}; text categorization \cite{rangel2016}; hardware assisted security \cite{santiago2019}; emotional analysis \cite{vidal2013, lusquinofilho2018, aus, empathy}, and; prediction tasks \cite{rew, lusquino2020}. Also, recent studies on theoretical aspects of the model can be found in \cite{carneiro2019}. 
+Recent applications of WiSARD with remarkable results corroborating the choice of this model: data stream clustering \cite{douglas, douglas2, douglas3}; time-series classification \cite{souza2014}; audio processing \cite{souza2015}; online tracking of objects \cite{nascimento2015}; GPS trajectory classification \cite{barbosa2018}; part-of-speech tagging \cite{carneiro2015, carneiro2017}; text categorization \cite{rangel2016}; hardware assisted security \cite{santiago2019}; emotional analysis \cite{vidal2013, lusquinofilho2018, aus, empathy}, and; prediction tasks \cite{rew, lusquino2020}. Also, recent studies on theoretical aspects of the model can be found in \cite{carneiro2019}.
 
 To facilitate the application of WiSARD and its extensions, a library in C/C++ was created, with a wrapper for Python, called wisardpkg. Section 02 of this work describes the models present in wisardpkg, while Section 03 gives details of their implementation, use, configurations and installation.
 
@@ -60,35 +60,37 @@ A variation of Regression WiSARD that is based on the same principle as ClusWiSA
 
 \subsection{Implementation}
 
+
+
 wisardpkg is hosted on GitHub at \hyperlink{https://iazero.github.io/wisardpkg/}{https://iazero.github.io/wisardpkg/}, where users can find the latest version of the library and user documentation. Model details and features described in this publication pertain to the latest version of the model as of the date of this publication. The lib was implemented in C/C++ with a Python wrapper.
 
 \subsection{Availability}
 
 \begin{itemize}
     \item \textbf{Operating systems:} Linux, Mac OSX, Windows
-    \item \textbf{Programming languages:} C++ 11 and up, Python version 3.7.0 and up
+    \item \textbf{Programming languages:} Python 3.7+
     \item \textbf{Additional system requirements:} NA
     \item \textbf{Dependency:} pybind11 ($\geq$ 2.5.0)
     \item \textbf{List of contributors:} All contributors were listed as authors with corresponding affiliations
     \item \textbf{Language:} C++, with wrapper to Python 3
     \item \textbf{Current version:} 2.0.0a7
-    
+
 \end{itemize}
 
 \subsection{Installation}
 
 \begin{itemize}
     \item \textbf{C++:}
-        \begin{itemize}
-            \item Clone \hyperlink{https://github.com/IAZero/wisardpkg}{https://github.com/IAZero/wisardpkg}
-            \item Copy the wisardpkg.hpp file to the desired project
-            \item Include the library in the C++ code
-        \end{itemize}
+          \begin{itemize}
+              \item Clone \hyperlink{https://github.com/IAZero/wisardpkg}{https://github.com/IAZero/wisardpkg}
+              \item Copy the wisardpkg.hpp file to the desired project
+              \item Include the library in the C++ code
+          \end{itemize}
     \item \textbf{Python:}
-    \begin{itemize}
-        \item Install Python PIP, if necessary
-        \item pip install wisardpkg 
-    \end{itemize}
+          \begin{itemize}
+              \item Install Python PIP, if necessary
+              \item pip install wisardpkg
+          \end{itemize}
 \end{itemize}
 
 To install wisardpkg in a Windows environment it is necessary to install Visual C++ additionally. To do this just download it from \hyperlink{https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads}{here} and then run the installer.
@@ -135,109 +137,60 @@ This module contains all the models and also the base classes from which they ex
 
 \begin{enumerate}
     \item \textbf{Base:}
-    
-    \begin{itemize}
-    \item \textbf{Model:} a simple trainable module
-    \begin{itemize}
-        \item train
-        \item getsizeof
-    \end{itemize}
-    \item \textbf{ClassificationModel:} a Model object that can calculate the similarity score in an access, as well as perform classifications
-    \begin{itemize}
-        \item classify
-        \item rank
-        \item score
-    \end{itemize}
-    \item \textbf{RegressionModel:} a Model object that performs predictions. Here the training is overwritten because of the partial prediction used in learning in this type of model.
-    \begin{itemize}
-        \item train
-        \item predict
-    \end{itemize}
-\end{itemize}
+
+          \begin{itemize}
+              \item \textbf{Model:} a simple trainable module
+                    \begin{itemize}
+                        \item train
+                        \item getsizeof
+                    \end{itemize}
+              \item \textbf{ClassificationModel:} a Model object that can calculate the similarity score in an access, as well as perform classifications
+                    \begin{itemize}
+                        \item classify
+                        \item rank
+                        \item score
+                    \end{itemize}
+              \item \textbf{RegressionModel:} a Model object that performs predictions. Here the training is overwritten because of the partial prediction used in learning in this type of model.
+                    \begin{itemize}
+                        \item train
+                        \item predict
+                    \end{itemize}
+          \end{itemize}
 
     \item \textbf{Wisard:}
-    \begin{itemize}
-        \item \textbf{RAM:} the minimal information unit in a weightless neural network, contains $2^{n}$ memory positions. 
-        \begin{itemize}
-            \item RAM: instantiates RAM. It is possible to use a json file with RAM previously saved for this. Two additional parameters here are ignoreZero (which allows not considering the initial position of each RAM in the classification phase) and base (its default value is 2, forming the classic WiSARD for binary patterns, but when modifying it it is possible to work with patterns that use more bits and the RAM will have $base^{n}$ memory locations).
-            \item getVote
-            \item train
-            \item untrain: it is possible to reverse the training process of an example, once the positions accessed are known, just subtracting their access counters.
-            \item getMentalImage: using the retina and the content of the RAM, it generates a representation of the learning.
-            \item setMapping: it is possible to choose a mapping for the RAM.
-        \end{itemize}
-        \item \textbf{Discriminator:}
-        \begin{itemize}
-            \item Discriminator: its main parameter is the size of the tuple. It is also possible to define your mapping and instantiate it from a json file. Its main methods are: train, untrain and classify.
-        \end{itemize}
-        \item \textbf{Wisard:} a ClassificationModel that has a set of discriminators. Its main methods are: train, untrain and classify. An optional parameter "balanced" when set to True causes the score of each discriminator during the classification to be normalized using the number of trained examples.
-    \end{itemize}
+          \begin{itemize}
+              \item \textbf{RAM:} the minimal information unit in a weightless neural network, contains $2^{n}$ memory positions.
+                    \begin{itemize}
+                        \item RAM: instantiates RAM. It is possible to use a json file with RAM previously saved for this. Two additional parameters here are ignoreZero (which allows not considering the initial position of each RAM in the classification phase) and base (its default value is 2, forming the classic WiSARD for binary patterns, but when modifying it it is possible to work with patterns that use more bits and the RAM will have $base^{n}$ memory locations).
+                        \item getVote
+                        \item train
+                        \item untrain: it is possible to reverse the training process of an example, once the positions accessed are known, just subtracting their access counters.
+                        \item getMentalImage: using the retina and the content of the RAM, it generates a representation of the learning.
+                        \item setMapping: it is possible to choose a mapping for the RAM.
+                    \end{itemize}
+              \item \textbf{Discriminator:}
+                    \begin{itemize}
+                        \item Discriminator: its main parameter is the size of the tuple. It is also possible to define your mapping and instantiate it from a json file. Its main methods are: train, untrain and classify.
+                    \end{itemize}
+              \item \textbf{Wisard:} a ClassificationModel that has a set of discriminators. Its main methods are: train, untrain and classify. An optional parameter "balanced" when set to True causes the score of each discriminator during the classification to be normalized using the number of trained examples.
+          \end{itemize}
     \item \textbf{Cluswisard:} has only one homonymous class, which will be described bellow:
-    \begin{itemize}
-        \item Cluswisard: its main parameters are the size of the tuple and the variables used in the verification to create new discriminators: minScore, threshold and discriminatorsLimit.
-        \item The main methods here include train, untrain, classify, trainUnsupervised and classifyUnsupervised, the latter is applied only when it is desired to know which is the discriminator with which the example is most similar, despite classes. 
-    \end{itemize}
+          \begin{itemize}
+              \item Cluswisard: its main parameters are the size of the tuple and the variables used in the verification to create new discriminators: minScore, threshold and discriminatorsLimit.
+              \item The main methods here include train, untrain, classify, trainUnsupervised and classifyUnsupervised, the latter is applied only when it is desired to know which is the discriminator with which the example is most similar, despite classes.
+          \end{itemize}
     \item \textbf{RegressionWisard:}
-    \begin{itemize}
-        \item \textbf{MeanFunctions:} this module has a Mean class, which serves as the basis for several other classes that contain the methods of the means used in the prediction of Regression WiSARD (SimpleMean, PowerMean, Median, HarmonicMean, HarmonicPowerMean, GeometricMean, ExponentialMean and LogisticMean).
-        \item \textbf{RegressionRAM:} analogous to the classification RAM, it has an extra content in its memory positions, which is the partial prediction. Additional parameters here include minZero and minOne, which are the minimum amount of these bits that a memory location needs to have to be considered in the prediction phase.
-        \item \textbf{RegressionWisard:} The network itself, a set of RegressionRAMs. Its main parameters are the size of the tuple and the average to be used, with minZero, minOne, completeAdressSize and mapping being additional parameters. Like other Models, it can be instantiated from a json file. Its main methods are train and predict.
-    \end{itemize}
+          \begin{itemize}
+              \item \textbf{MeanFunctions:} this module has a Mean class, which serves as the basis for several other classes that contain the methods of the means used in the prediction of Regression WiSARD (SimpleMean, PowerMean, Median, HarmonicMean, HarmonicPowerMean, GeometricMean, ExponentialMean and LogisticMean).
+              \item \textbf{RegressionRAM:} analogous to the classification RAM, it has an extra content in its memory positions, which is the partial prediction. Additional parameters here include minZero and minOne, which are the minimum amount of these bits that a memory location needs to have to be considered in the prediction phase.
+              \item \textbf{RegressionWisard:} The network itself, a set of RegressionRAMs. Its main parameters are the size of the tuple and the average to be used, with minZero, minOne, completeAdressSize and mapping being additional parameters. Like other Models, it can be instantiated from a json file. Its main methods are train and predict.
+          \end{itemize}
     \item \textbf{ClusRegressionWisard:} This module has only one homonymous class, which is a RegressionModel, whose main instantiation parameters are addressSize, minScore, threshold and limit. Its main methods are train and predict.
 \end{enumerate}
 
 Additionally, the library has a commons module, with exceptions and utils, and a wrapper module for Python.
 
-%\bibliographystyle{plain}
-%\bibliography{references}
-
-\begin{footnotesize}
-\begin{thebibliography}{99}
-\bibitem{aleksander}I. Aleksander, W. Thomas, and P. Bowden, \emph{WISARD, a radical new step forward in image recognition}, Sensor Rev., 4(3), 120-124, 1984.
-
-\bibitem{grieco2010}Grieco, Bruno PA and Lima, Priscila MV and De Gregorio, Massimo and Fran{\c{c}}a, Felipe MG, \emph{Producing pattern examples from images}, Neurocomputing, 73, 7-900, 1057--1064,2010, Elsevier.
-
-\bibitem{rew}Filho, Leopoldo AD Lusquino and Oliveira, Luiz FR and Filho, Aluizio L and Guarisa, Gabriel P and Lima, Priscila MV and Fran{\c{c}}a, Felipe MG, \emph{Prediction of Palm Oil Production with an Enhanced n-Tuple Regression Network}, Proceedings of the 27th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning (ESANN), 2019.
-
-\bibitem{douglas}Douglas O. Cardoso and Danilo Carvalho and Daniel S. F. Alves and Diego F. P. de Souza and Hugo C. C. Carneiro and Carlos E. Pedreira and Priscila M. V. Lima and Felipe M. G. Fran\c{c}a, \emph{Financial credit analysis via a clustering weightless neural classifier}, Neurocomputing,183, 70--78, 2016,
-doi:10.1016/j.neucom.2015.06.105.
-
-\bibitem{douglas2}Douglas O. Cardoso and Massimo de Gregorio and Priscila M. V. Lima and et al., \emph{A Weightless Neural Network-Based Approach for Stream Data Clustering}, Intelligent Data Engineering and Automated Learning - IDEAL 2012 - 13th International Conference, Natal, Brazil, 328â€“-335, 2012, doi:10.1007/978-3-642-32639-4.
-
-\bibitem{douglas3}Douglas O. Cardoso and Priscila M. V. Lima and Massimo de Gregorio and et al.,\emph{Clustering data streams with weightless neural networks}, ESANN 2011, 19th European Symposium on Artificial Neural Networks, Bruges, Belgium, 2011, 201 -- 206, 2-s2.0-84962014029.
-
-\bibitem{souza2014}de Souza, D. F. P. and Fran\c{c}a, F. M. G., and Lima, P. M. V., \emph{Spatio-temporal pattern classification with KernelCanvas and WiSARD},2014 Brazilian Conference on Intelligent Systems (BRACIS 2014),228--233,2014.
-
-\bibitem{souza2015}de Souza, D. F. P. and Fran\c{c}a, F. M. G. and Lima, P. M. V.,\emph{Real-time music tracking based on a weightless neural network},Proceedings of the 2015 Ninth International Conference on Complex, Intelligent, and Software Intensive Systems, 64--69,2015.
-
-\bibitem{nascimento2015}Nascimento, D. N. and de Carvalho, R. L. and Mora-Camino and F., Lima, P. M. V. and Fran\c{c}a, F. M. G., \emph{A WiSARD-based multi-term memory framework for online tracking of objects}, Proceedings of the 23rd European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, 19--24, 2015.
-
-\bibitem{barbosa2018}Barbosa, Raul and Cardoso, Douglas O and Carvalho, Diego and Franca, Felipe MG, \emph{Weightless neuro-symbolic GPS trajectory classification},Neurocomputing,298,100--108,2018,Elsevier.
-
-\bibitem{carneiro2015}Carneiro, H. C. C. and Fran\c{c}a, F. M. G. and Lima, P. M. V.,\emph{Multilingual part-of-speech tagging with weightless neural networks},Neural Networks,66,11--21,2015.
-
-\bibitem{carneiro2017}Carneiro, H. C. C. and Pedreira, C. E. and Fran\c{c}a, F. M. G. and Lima, P. M. V.,\emph{A universal multilingual weightless neural network tagger via quantitative linguistics},Neural Networks,91,85--101,2017.
-
-\bibitem{carneiro2019}Carneiro, Hugo CC and Pedreira, Carlos E and Fran{\c{c}}a, Felipe MG and Lima, Priscila MV,\emph{The exact vc dimension of the wisard n-tuple classifier},Neural computation,31,1,176--207,2019,MIT Press.
-
-\bibitem{rangel2016}Rangel, F., Firmino and F., Lima, P. M. V. and Oliveira, J.,\emph{Semi-Supervised Classification of Social Textual Data Using WiSARD},Proceedings of the 24th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning,165--170,2016.
-
-\bibitem{santiago2019}de Ara{\'u}jo, Leandro Santiago and Patil, Vinay C and Prado, Charles B and Alves, Tiago AO and Marzulo, Leandro AJ and Fran{\c{c}}a, Felipe MG and Kundu, Sandip,\emph
-{Design of Robust, High-Entropy Strong PUFs via Weightless Neural Network},Journal of Hardware and Systems Security,3,3,235--249,2019,Springer.
-
-\bibitem{vidal2013}Vidal, F. S. and Carneiro, H. C. C. and Rosa, P. F. F. and Fran\c{c}a, F. M. G., \emph{Identifica\c{c}\~{a}o de emo\c{c}\~{o}es a partir de express\~{o}es faciais com redes neurais sem peso},Proceedings of XI SBAI -- Simp\'{o}sio Brasileiro de Automa\c{c}\~{a}o Inteligente (In Portuguese),2013.
-
-\bibitem{lusquinofilho2018}Lusquino Filho, L. A. D. and Fran\c{c}a, F. M. G. and Lima, P. M. V.,\emph{Near-optimal facial emotion classification using WiSARD-based weightless system},Proceedings of the 26th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning,85--90,2018.
-
-\bibitem{aus}Lusquino Filho, L. A. D. and Guarisa, G. P. and Lima Filho, A. and de Oliveira, L. F. R. and Fran\c{c}a, F. M. G. and Lima, P. M. V.,\emph{Classifying Actions Units with ClusWiSARD}, Proceedings of the 28th International Conference on Artificial Neural Networks, 2019.
-
-\bibitem{empathy}Lusquino Filho, L. A. D. and de Oliveira, L. F. R. and Guarisa, G. P. and Lima Filho, A. and Carneiro, H. C. C. and Fran\c{c}a, F. M. G. and Lima, P. M. V.,\emph{A weightless regression system for predicting multi-modal empathy}, Workshop Affective Behavior Analysis in-the-wild, Proc. of the 15th IEEE FG, 2020.
-
-\bibitem{lusquino2020}Lusquino Filho, L. A. D. and Oliveira, Luiz FR and Lima Filho, Aluizio and Guarisa, Gabriel P and Felix, Lucca M and Lima, Priscila MV and Fran{\c{c}}a, Felipe MG,\emph{Extending the Weightless WiSARD Classifier for Regression}, Neurocomputing, 2020,Elsevier.
-
-\bibitem{qualify}Lusquino Filho, L. A. D.,\emph{Extending multi-label and regression capabilities of WiSARD models for multi-modal prediction},PESC/COPPE/UFRJ, 2019.
-
-\end{thebibliography}
-\end{footnotesize}
+\bibliographystyle{plain}
+\bibliography{satyrus-arxiv}
 
 \end{document}

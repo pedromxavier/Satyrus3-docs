@@ -274,3 +274,11 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# Satyrus Output
+graph_color.json
+knapsack.json
+tsp.json
+
+# Satyrus Cache
+.satyrus

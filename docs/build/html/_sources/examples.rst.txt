@@ -4,7 +4,7 @@ Examples
 Problem Modelling
 =================
 
-.. include:: ./examples/graph-coloring.rst
+.. include:: ./examples/graph_color.rst
 
 .. include:: ./examples/tsp.rst
 

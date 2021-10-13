@@ -54,7 +54,7 @@ LOW = 1;
 
 (opt) backwards_cost:
     exists{i = [1:n]} # for each city 'i'
-    exists{j = [1:n], i != j} # for each other city 'j'
+    exists{j = [1:n], i != j} # for eac h other city 'j'
     exists{k = [2:n]} # for each position
     (tour[i][k] and tour[j][k-1]) * dist[i][j];
 
