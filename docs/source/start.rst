@@ -51,3 +51,5 @@ After installation, the ``satyrus`` executable should be available in the comman
 
 ..  * :ref:`genindex`
     * :ref:`search`
+
+Also, consider visiting the `examples page <./examples.html>`_.

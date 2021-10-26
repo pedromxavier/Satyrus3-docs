@@ -1,76 +1,28 @@
-# Available items
+# Available xs
 n = 3;
 
-# Knapsack Capacity (Available Slots)
-s = 4;
+x[n];
 
-# Number of blocks (Total Weight)
-b = 6;
-
-item[n];
-
-x[s][b];
-
-#{
-weight[n] = {
+w[n] = {
   (1) : 1,
-  (2) : 2,
-  (3) : 3,
-}
-}#
-
-item_block[n][b] = {
-  # First item takes two blocks
-  (1,1) : 1,
-  (1,2) : 1,
-  (1,3) : 0,
-  (1,4) : 0,
-  (1,5) : 0,
-  (1,6) : 0,
-
-  # The second takes the next 3
-  (2,1) : 0,
-  (2,2) : 0,
-  (2,3) : 1,
-  (2,4) : 1,
-  (2,5) : 1,
-  (2,6) : 0,
-
-  # The last block is given to the third item
-  (3,1) : 0,
-  (3,2) : 0,
-  (3,3) : 0,
-  (3,4) : 0,
-  (3,5) : 0,
-  (3,6) : 1
+  (2) : 4,
+  (3) : 3
 };
 
-# Item Values ($$)
-value[n] = {
+v[n] = {
   (1) : 4,
   (2) : 6,
   (3) : 3
 };
 
+s[3];
+
+# Capacity
+M = 4;
+
 # Penalty Levels
 LOW = 1;
 
-(int) one_block_per_slot[LOW]:
-    forall{i = [1:s]}
-    unique{k = [1:b]}
-    x[i][k];
-    
-(int) one_slot_per_block[LOW]:
-    unique{i = [1:s]}
-    forall{k = [1:b]}
-    x[i][k];
+(opt) eita[1]: (x[1] * w[1] + x[2] * w[2] + x[3] * w[3] + (s[1] + 2 * s[2]) - M) ** 2.0;
 
-(int) coupling[LOW]:
-    forall{m = [1:n]}
-    forall{i = [1:s]}
-    forall{k = [1:b]}
-    item_block[m][k] -> (x[i][k] <-> item[m]);
-
-(opt) cost:
-    exists{i = [1:n]}
-    ~item[i] * value[i];
+(opt) cost: sum{i = [1:n]} -v[i] * x[i];

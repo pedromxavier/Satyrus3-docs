@@ -1,4 +1,4 @@
-# Number of verties in the graph.
+# Number of vertices in the graph.
 n = 5;
 
 # Graph representation
@@ -28,7 +28,7 @@ c[n];
     forall{i = [1:n]}
     forall{j = [1:n], j > i}
     forall{k = [1:n]}
-    neigh[i][j] -> ~(vc[i][k] & vc[j][k]);
+    neigh[i][j] -> not (vc[i][k] and vc[j][k]);
 
 (int) use_color[1]:
     forall{i = [1:n]}
@@ -37,9 +37,9 @@ c[n];
 
 (int) color_all[1]:
     forall{i = [1:n]}
-    unique{k = [1:n]}
+    wta{k = [1:n]}
     vc[i][k];
 
 (opt) cost:
-    exists{k = [1:n]}
+    sum{k = [1:n]}
     c[k];

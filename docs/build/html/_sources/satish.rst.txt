@@ -26,7 +26,6 @@ Comments are either single-line (found after the comment mark ``#``) or multi-li
       some more...
       ------------ close }#
 
-   ?alpha: 1.0;
    ?epsilon: 1E-5; # Defines tiebreak factor
 
 Directives are ``?<key>: <value>;`` statements used to configure special compiler environment variables. The main two are ``?alpha`` and ``?epsilon``, namely the base penalty level :math:`\alpha` and the tiebreaker factor :math:`\epsilon`.

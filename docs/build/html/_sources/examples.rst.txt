@@ -25,18 +25,18 @@ This is intended to represent the problem's energy equation.
 
 **Note:** It is possible to set the output destination using the ``-o, --ouput`` option, followed by the desired target.
 
-Solver Interface
-================
+Solver Interfaces
+=================
 
-In order to pass the generated energy equation to a solver, it is enough to use the ``-s, --solver`` option.
+Solver interfaces, available via the Satyrus Python API allow the user to interact with the compilation output in many different ways, from straightforward passing it into solver machinery to conversion between output types. In order to pass the generated energy equation to a solver, it is enough to use the ``-s, --solver`` option.
 
 .. code-block:: bash
 
-   $ satyrus graph_color.sat -s gurobi
+   $ satyrus source.sat -s solver
 
-The expected behaviour is to store the solution in the ``graph_color.json`` file, under keys "solution" and "energy", being the first a mapping between variables and its values and the latter the total energy for the given setup.
+The expected behaviour is to store the solution in the ``source.out.json`` file, under keys "solution" and "energy", where the first is a mapping between variables and its values and the latter is the total energy for the given setup.
 
-**Note:** Run ``satyrus --help`` for a list of the available solvers in your installation.
+**Note:** Run ``sat-api`` for a list of the available solvers in your installation.
 
 Parameters may be passed to the solver using a separate JSON file containing the corresponding mapping. The destination for feeding the parameters file must be provided using the ``-p, --params`` command-line option.
 
@@ -62,37 +62,29 @@ Defining custom solver interfaces is pretty straightforward. In a separate Pytho
 
 .. code-block:: python
 
-   # Future Imports
-   from __future__ import annotations
-
-   # Satyrus Imports
    from satyrus import SatAPI, Posiform
+   import random
 
-   class MyPartialAPI(SatAPI):
-
-       def solve(self, posiform: Posiform, **params: dict) -> object:
-           return "My Solution"
-
-   class MyCompleteAPI(SatAPI):
+   class bogo(SatAPI):
       
-       def solve(self, posiform: Posiform, **params: dict) -> tuple[dict, float]:
-           # Completely ignores problem defined by 'posiform'
-           # giving always the same solution:
-           x = {'x': 0, 'y': 1, 'z': 0}
-           e = 2.0
-           return (x, e)
+       def solve(self, energy: Posiform, **params: dict) -> tuple[dict, float]:
+           X = energy.variables 
+           s = {x: random.randint(0, 1) for x in X}
+           e = float(energy(s))
+           return (s, e)
 
-Your new class must implement the ``solve`` method, which must have one of the two signatures presented above. It receives a ``Posiform`` object and some eventual keyword arguments. If the return type is a tuple containing a solution mapping and its respective energy, the solution is considered to be *complete*, receiving special formatting when delivered to the output file. Otherwise, a string representation of the output object is dumped to the target destination as-is.
+Your new class must implement the ``solve`` method, which must have one of the two signatures presented above. It receives a ``Posiform`` object and some eventual parameters as keyword arguments. If the return type is a tuple containing a solution mapping and its respective energy, the solution is considered to be *complete*, receiving special formatting when delivered to the output file. Otherwise, a string representation of the output object is dumped to the target destination as-is.
 
-After writing the contents above to the ``myapi.py`` file, it becomes possible to include the custom interface by typing
+After writing the contents above to the ``bogoapi.py`` file, it becomes possible to include the custom interface by typing
 
 .. code-block:: bash
    
-   $ satyrus graph_color.sat --api myapi.py -s MyCompleteAPI
+   $ sat-api add bogoapi.py
+   $ satyrus graph_color.sat -s bogo
 
 **Note:** As you might be thinking, it is important to chose the class name wisely!
 
-More about the Python API is found on this `page <./api.html>`_.
+More in-depth explanation about the Python API is found on `this page <./api.html>`_.
 
 ..  * :ref:`genindex`
     * :ref:`search`
