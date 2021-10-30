@@ -1,13 +1,27 @@
+# Standard Library
+import itertools as it
+
+# Satyrus
 from satyrus import SatAPI, Posiform
 
-import itertools as it
-import numpy as np
-
 class brutus(SatAPI):
-    """"""
+    """\
+    Satyrus API Brute-Force Solver
+    """
     
     def solve(self, energy: Posiform, **params):
-        """"""
+        """\
+        Parameters
+        ----------
+        energy: Posiform
+
+        Returns
+        -------
+        dict[str, int]
+            Problem Solution, mapping between variables and states
+        float
+            Solution's associated energy scalar value
+        """
         x = energy.variables
 
         E = None
@@ -24,7 +38,7 @@ class brutus(SatAPI):
         return ({x[i]: int(S[i]) for i in range(n)}, E)
 
     @staticmethod
-    def states(n: int) -> np.ndarray:
+    def states(n: int) -> tuple:
         """\
         Generates all possible $2^{n}$ binary states
 
@@ -34,7 +48,6 @@ class brutus(SatAPI):
 
         Yields
         ------
-        np.ndarray[float]
+        tuple[float]
         """
-        for s in it.product(*((1, 0) for _ in range(n))):
-            yield np.array(s, dtype=float)
+        return it.product(*((1, 0) for _ in range(n)))

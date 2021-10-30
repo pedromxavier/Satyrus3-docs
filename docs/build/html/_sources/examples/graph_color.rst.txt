@@ -64,19 +64,19 @@ That yields the logical expression :math:`\forall i \,\, \forall k \,\, vc_{i, k
        forall{k = [1:n]}
        vc[i][k] -> c[k];
 
-Following, we say that to every vertex must be assigned a unique color, where we may use the ``unique`` quantifier keyword i.e. there exists exactly one color :math:`k` related to vertex :math:`i`.
+Following, we say that to every vertex must be assigned a unique color, where we may use the ``wta`` quantifier keyword i.e. there exists exactly one color :math:`k` related to vertex :math:`i`.
 
 .. code-block:: satish
 
    (int) color_all[1]:
        forall{i = [1:n]}
-       unique{k = [1:n]}
+       wta{k = [1:n]}
        vc[i][k];
 
 Last but not least, we define our optimality constraint, where we state that every color used increases the overall cost.
 
 .. code-block:: satish
 
-   (opt) cost: exists{k = [1:n]} c[k];
+   (opt) cost: sum{k = [1:n]} c[k];
 
 **Note:** The whole ``graph_color.sat`` file is available for downaload :download:`here </_static/examples/graph_color.sat>`.

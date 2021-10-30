@@ -76,12 +76,12 @@ The sole integrity constraint to be guaranteed is that every town occupies a sin
    (int) visit_all_once[LOW]: 
       # Every city 'i' appears uniquely across the tour.
       forall{i = [1:n]} 
-      unique{j = [1:n]}
+      wta{j = [1:n]}
       tour[i][j];
 
    (int) fill_all_once[LOW]: 
       # Every tour position 'i' has exactly one city 'j' associated to it.
-      unique{i = [1:n]}
+      wta{i = [1:n]}
       forall{j = [1:n]}
       tour[i][j];
 
@@ -90,15 +90,15 @@ The optimality constraints are built upon accounting for the costs that lie betw
 .. code-block:: satish
 
    (opt) backwards_cost:
-       exists{i = [1:n]} # for each city 'i'
-       exists{j = [1:n], i != j} # for each other city 'j'
-       exists{k = [2:n]} # for each position
+       sum{i = [1:n]} # for each city 'i'
+       sum{j = [1:n], i != j} # for each other city 'j'
+       sum{k = [2:n]} # for each position
        (tour[i][k] and tour[j][k-1]) * dist[i][j];
 
    (opt) forwards_cost:
-       exists{i = [1:n]} # for each city 'i'
-       exists{j = [1:n], i != j} # for each other city 'j'
-       exists{k = [1:n-1]} # for each position
+       sum{i = [1:n]} # for each city 'i'
+       sum{j = [1:n], i != j} # for each other city 'j'
+       sum{k = [1:n-1]} # for each position
        (tour[i][k] and tour[j][k+1]) * dist[i][j];
 
 **Note:** The whole ``tsp.sat`` file is available for downaload :download:`here </_static/examples/tsp.sat>`.

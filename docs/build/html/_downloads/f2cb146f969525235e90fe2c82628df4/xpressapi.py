@@ -4,13 +4,22 @@ import xpress as xp
 import numpy as np
 
 class xpress(SatAPI):
-    """"""
+    """\
+    Satyrus API FICO® Xpress Interface
+    """
 
     def solve(self, energy: Posiform, **params) -> tuple[dict, float]:
         """
         Parameters
         ----------
         energy: Posiform
+
+        Returns
+        -------
+        dict[str, int]
+            Problem Solution, mapping between variables and states
+        float
+            Solution's associated energy scalar value
         """
         x, Q, c = energy.qubo()
 

@@ -1,4 +1,3 @@
-# Available xs
 n = 3;
 
 x[n];
@@ -23,6 +22,6 @@ M = 4;
 # Penalty Levels
 LOW = 1;
 
-(opt) eita[1]: (x[1] * w[1] + x[2] * w[2] + x[3] * w[3] + (s[1] + 2 * s[2]) - M) ** 2.0;
+(opt) eita[LOW]: (x[1] * w[1] + x[2] * w[2] + x[3] * w[3] + (s[1] + 2 * s[2]) - M) ** 2.0;
 
 (opt) cost: sum{i = [1:n]} -v[i] * x[i];

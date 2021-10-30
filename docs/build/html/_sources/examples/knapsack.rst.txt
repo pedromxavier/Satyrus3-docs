@@ -66,3 +66,54 @@ That said, the problem can be stated as
    \begin{align*}
    \min -\sum_{i=1}^{n} x_{i}\, v_{i} + \lambda \left({ \sum_{i=1}^{n} x_{i}\, w_{i} + \sum_{j=1}^{m} 2^{j-1}\, s_{j} - M }\right)^{2}
    \end{align*}
+
+for some penalty :math:`\lambda` which might be left for Satyrus to compute.
+
+.. code-block:: satish
+
+   n = 3;
+
+   x[n];
+
+   w[n] = {
+       (1) : 1,
+       (2) : 4,
+       (3) : 3
+   };
+
+   v[n] = {
+       (1) : 4,
+       (2) : 6,
+       (3) : 3
+   };
+
+   s[2];
+
+   # Capacity
+   M = 4;
+
+   # Penalty Levels
+   LOW = 1;
+
+   (opt) eita[LOW]: (x[1] * w[1] + x[2] * w[2] + x[3] * w[3] + (s[1] + 2 * s[2]) - M) ** 2.0;
+
+   (opt) cost: sum{i = [1:n]} -v[i] * x[i];
+
+**Note**: As of version 3.0.7, there is no available syntax for writing the general form of this problem as is in SATish, due to the lack of inner loops. This feature is scheduled to be present on the first release of the 3.1.x series. A future version will allow one to write the constraints from the code above as
+
+.. code-block:: satish
+
+   # Capacity
+   M = 4;
+
+   # Log_2 M
+   m = 2;
+
+   s[m];
+
+   # Penalty Levels
+   LOW = 1;
+
+   (opt) eita[LOW]: ((sum{i=[1:n} x[i] * w[i]) + (sum{j=[1:m]} 2**(j-1) * s[j]) - M) ** 2.0;
+
+   (opt) cost: sum{i = [1:n]} -v[i] * x[i];
